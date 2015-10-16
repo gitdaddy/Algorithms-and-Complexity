@@ -16,12 +16,15 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include <vector>
-#include <stack>
+#include <time.h>    // clock_t
+#include <algorithm> // swap
+
 using namespace std;
 
-typedef int arrayItems;
-const int NUMITEMS = 100;
+typedef int arrayItems;    // the type of item in the array
+const int NUMITEMS = 100;  // number of items in array
+clock_t start;        
+clock_t finish;
 
 void cocktailSort(arrayItems A[])
 {
@@ -54,7 +57,15 @@ void cocktailSort(arrayItems A[])
 
 void bubbleSort(arrayItems B[])
 {
+	for(int i = 0; i < NUMITEMS - 1; i++)
+	{
+		for(int j = 0; j < NUMITEMS - 1; j++)
+		{
+			if(B[j] > B[j + 1])
+				swap(B[j], B[j+1]);
+		}
 
+	}
 }
 
 void mergeSort(arrayItems C[])
@@ -89,46 +100,57 @@ int main()
 		cerr << " " << x[i]; 
 	}
 
-	int z; 
-	cout << "\n 1. Coctail Sort" << endl;
-	cout << " 2. Bubble Sort" << endl;
-	cout << " 3. Merge Sort" << endl;
-	cout << " 4. Binary Tree Sort" << endl << " >";
-	cin >> z;
-	
-	switch(z)
+	bool breakout = false;
+	do
 	{
-		case 1:
+		int z; 
+		cout << "\n 1. Coctail Sort" << endl;
+		cout << " 2. Bubble Sort" << endl;
+		cout << " 3. Merge Sort" << endl;
+		cout << " 4. Binary Tree Sort" << endl  << " >";
+		cin >> z;
+		if(cin.fail())
+			breakout = true;
+	
+		switch(z)
 		{
-			cocktailSort(x);    // n^2
-			break;
-		}
-		case 2:
-		{
-			bubbleSort(x);     // n^2
-			break;
-		}
-		case 3:
-		{
-			mergeSort(x);       // nlogn
-			break;
-		}
-		case 4:
-		{
-			BTSort(x);			// nlogn
-			break;
-		}
-		default:
-		{
-			cout << "Sorry that is not an option\n";
-			break;
-		}
+			case 1:
+			{	
+				start = clock();
+				cocktailSort(x);    // n^2
+				break;
+			}
+			case 2:
+			{
+				bubbleSort(x);     // n^2
+				break;
+			}
+			case 3:
+			{
+				mergeSort(x);       // nlogn
+				break;
+			}
+			case 4:
+			{
+				BTSort(x);			// nlogn
+				break;
+			}
+			default:
+			{
+				cout << "Sorry that is not an option\n";
+				breakout = true;
+				break;
+			}
 
-	}
-	cout << "Sorted List\n";
-	displayItems(x);
+		}
+		finish = clock();
+		cout << setprecision(3) << "Time to complete: " << (finish - start) / (double) CLOCKS_PER_SEC;
 
+		//cout << "\nSorted List\n";
+		//displayItems(x);
 
-	cin >> x;
+	}while(!breakout);
+
+	
 	return 0;
 }
