@@ -75,7 +75,19 @@ void mergeSort(arrayItems C[])
 
 void BTSort(arrayItems D[])
 {
-
+   BST<arrayItems> sortBin;
+   // insert data to BST
+   for (int i = 0; i < NUMITEMS; i++)
+      sortBin.insert(D[i]);
+   
+   int count = 0;
+   BSTiterator<arrayItems> it;
+   // copy back to the array
+   for (BSTiterator<arrayItems> it = sortBin.begin(); it != sortBin.end(); it++)
+   {
+      D[count] = * it;
+      count++;
+   }
 }
 
 void displayItems(arrayItems x[])
