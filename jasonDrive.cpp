@@ -4,6 +4,7 @@
 #include <stdlib.h>        // for rand() and srand()
 #include "sortValue.h"     // for SortValue to instrument the sort algorithms
 #include "sortBubble.h"    // for sortBubble()
+#include "cockTail.h"      // for cockTailSort(T array[], int numItems)
 #include "sortSelection.h" // for sortSelection()
 #include "sortInsertion.h" // for sortInsertion()
 #include "sortBinary.h"    // for sortBinary()
@@ -37,7 +38,8 @@ const SortNameAndFunction sorts[] =
    { "Binary Sort",    sortBinary,    sortBinary    },
    { "Heap Sort",      sortHeap,      sortHeap      },
    { "Merge Sort",     sortMerge,     sortMerge     },
-   { "Quick Sort",     sortQuick,     sortQuick     }
+   { "Quick Sort",     sortQuick,     sortQuick     },
+   { "CockTail",     Cocktailsort,      cockTailSort }
 
 };
 
