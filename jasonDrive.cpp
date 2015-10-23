@@ -5,12 +5,12 @@
 #include "sortValue.h"     // for SortValue to instrument the sort algorithms
 #include "sortBubble.h"    // for sortBubble()
 #include "cockTail.h"      // for cockTailSort(T array[], int numItems)
-#include "sortSelection.h" // for sortSelection()
-#include "sortInsertion.h" // for sortInsertion()
+//#include "sortSelection.h" // for sortSelection()
+//#include "sortInsertion.h" // for sortInsertion()
 #include "sortBinary.h"    // for sortBinary()
-#include "sortHeap.h"      // for sortHeap()
+//#include "sortHeap.h"      // for sortHeap()
 #include "sortMerge.h"     // for sortMerge()
-#include "sortQuick.h"     // for sortQuick()
+//#include "sortQuick.h"     // for sortQuick()
 using namespace std;
 
 // prototypes for our test functions
@@ -33,12 +33,12 @@ const SortNameAndFunction sorts[] =
 {
    { NULL,             NULL,          NULL          },
    { "Bubble Sort",    sortBubble,    sortBubble    },
-   { "Selection Sort", sortSelection, sortSelection },
-   { "Insertion Sort", sortInsertion, sortInsertion },
+   //{ "Selection Sort", sortSelection, sortSelection },
+   //{ "Insertion Sort", sortInsertion, sortInsertion },
    { "Binary Sort",    sortBinary,    sortBinary    },
-   { "Heap Sort",      sortHeap,      sortHeap      },
+   //{ "Heap Sort",      sortHeap,      sortHeap      },
    { "Merge Sort",     sortMerge,     sortMerge     },
-   { "Quick Sort",     sortQuick,     sortQuick     },
+   //{ "Quick Sort",     sortQuick,     sortQuick     },
    { "CockTail",     Cocktailsort,      cockTailSort }
 
 };
