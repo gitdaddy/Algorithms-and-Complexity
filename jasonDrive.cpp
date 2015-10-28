@@ -3,8 +3,7 @@
 #include <ctime>           // for time(), part of the random process
 #include <stdlib.h>        // for rand() and srand()
 #include "sortValue.h"     // for SortValue to instrument the sort algorithms
-#include "sortBubble.h"    // for sortBubble()
-#include "cockTail.h"      // for cockTailSort(T array[], int numItems)
+#include "sortBubble.h"    // for sortBubble() contains Cocktail Sort
 //#include "sortSelection.h" // for sortSelection()
 //#include "sortInsertion.h" // for sortInsertion()
 #include "sortBinary.h"    // for sortBinary()
@@ -37,9 +36,9 @@ const SortNameAndFunction sorts[] =
    //{ "Insertion Sort", sortInsertion, sortInsertion },
    { "Binary Sort",    sortBinary,    sortBinary    },
    //{ "Heap Sort",      sortHeap,      sortHeap      },
-   { "Merge Sort",     sortMerge,     sortMerge     },
+   { "Merge Sort",     sortMerge,     sortMerge     }, // contains bug that causes a crash
    //{ "Quick Sort",     sortQuick,     sortQuick     },
-   { "CockTail",     Cocktailsort,      cockTailSort }
+   { "CockTail",        CTS,              CTS }
 
 };
 
@@ -52,7 +51,7 @@ int main()
    // menu, built from the sortValues list above
    cout << "Select the test you want to run:\n";
    cout << "\t0. To compare all the sorting algoritms\n";
-   for (int i = 1; i <= 7; i++)
+   for (int i = 1; i <= 4; i++)
       cout << '\t' << i << ". "
            << sorts[i].name << endl;
 
@@ -64,11 +63,12 @@ int main()
    // execute the user's choice
    if (choice == 0)
       compareSorts();
-   else if (choice >= 1 && choice <= 7)
+   else if (choice >= 1 && choice <= 4)
       testIndividualSorts(choice);
    else
       cout << "Unrecognized command, exiting...\n";
 
+  cin >> choice; // just to pause the screen
    return 0;
 }
 
