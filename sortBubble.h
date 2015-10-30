@@ -32,7 +32,7 @@ void sortBubble(T array[], int numElements)
 }
 
 template <class T>
-void CTS(T A[], int NUMITEMS)
+void sortCockTail(T A[], int NUMITEMS)
 {
       bool swapped;
       do
