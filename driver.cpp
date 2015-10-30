@@ -3,13 +3,9 @@
 #include <ctime>           // for time(), part of the random process
 #include <stdlib.h>        // for rand() and srand()
 #include "sortValue.h"     // for SortValue to instrument the sort algorithms
-#include "sortBubble.h"    // for sortBubble() contains Cocktail Sort
-//#include "sortSelection.h" // for sortSelection()
-//#include "sortInsertion.h" // for sortInsertion()
+#include "sortBubble.h"    // for sortBubble()
 #include "sortBinary.h"    // for sortBinary()
-//#include "sortHeap.h"      // for sortHeap()
 #include "sortMerge.h"     // for sortMerge()
-//#include "sortQuick.h"     // for sortQuick()
 using namespace std;
 
 // prototypes for our test functions
@@ -32,13 +28,9 @@ const SortNameAndFunction sorts[] =
 {
    { NULL,             NULL,          NULL          },
    { "Bubble Sort",    sortBubble,    sortBubble    },
-   //{ "Selection Sort", sortSelection, sortSelection },
-   //{ "Insertion Sort", sortInsertion, sortInsertion },
+   { "Cocktail Sort",  sortCockTail,  sortCockTail  },
    { "Binary Sort",    sortBinary,    sortBinary    },
-   //{ "Heap Sort",      sortHeap,      sortHeap      },
-   { "Merge Sort",     sortMerge,     sortMerge     }, // contains bug that causes a crash
-   //{ "Quick Sort",     sortQuick,     sortQuick     },
-   { "CockTail",        CTS,              CTS }
+   { "Merge Sort",     sortMerge,     sortMerge     }
 
 };
 
@@ -48,27 +40,27 @@ const SortNameAndFunction sorts[] =
  ***********************************************************************/
 int main()
 {
-   // menu, built from the sortValues list above
-   cout << "Select the test you want to run:\n";
-   cout << "\t0. To compare all the sorting algoritms\n";
-   for (int i = 1; i <= 4; i++)
-      cout << '\t' << i << ". "
-           << sorts[i].name << endl;
+   compareSorts();
+   // // menu, built from the sortValues list above
+   // cout << "Select the test you want to run:\n";
+   // cout << "\t0. To compare all the sorting algoritms\n";
+   // for (int i = 1; i <= 4; i++)
+      // cout << '\t' << i << ". "
+           // << sorts[i].name << endl;
 
-   // user specifies his choice
-   int choice;
-   cout << "> ";
-   cin  >> choice;
+   // // user specifies his choice
+   // int choice;
+   // cout << "> ";
+   // cin  >> choice;
 
-   // execute the user's choice
-   if (choice == 0)
-      compareSorts();
-   else if (choice >= 1 && choice <= 4)
-      testIndividualSorts(choice);
-   else
-      cout << "Unrecognized command, exiting...\n";
+   // // execute the user's choice
+   // if (choice == 0)
+      // compareSorts();
+   // else if (choice >= 1 && choice <= 4)
+      // testIndividualSorts(choice);
+   // else
+      // cout << "Unrecognized command, exiting...\n";
 
-  cin >> choice; // just to pause the screen
    return 0;
 }
 
@@ -150,10 +142,13 @@ void compareSorts()
    srand(time(NULL));
    cout.setf(ios::fixed);
    cout.precision(2);
-   cout << "      Sort Name    Time       Assigns      Compares\n";
-   cout << " ---------------+-------+-------------+-------------\n";
+   // cout << "      Sort Name    Time       Assigns      Compares\n";
+   // cout << " ---------------+-------+-------------+-------------\n";
 
-   for (int iSort = 1; iSort <= 7; iSort++)
+   cout << "      Sort Name    Time  \n";
+   cout << " ---------------+-------+\n";   
+   
+   for (int iSort = 1; iSort <= 4; iSort++)
    {
       // get ready by copying the un-sorted numbers to the array
       for (int iValue = 0; iValue < num; iValue++)
@@ -167,9 +162,9 @@ void compareSorts()
 
       // report the results
       cout << setw(15) << sorts[iSort].name                    << " |"
-           << setw(6)  << (float)(msEnd - msBegin) / 1000000.0 << " |"
-           << setw(12) << arraySort[0].getAssigns()            << " |"
-           << setw(12) << arraySort[0].getCompares()           << endl;
+           << setw(6)  << (float)(msEnd - msBegin) / 1000000.0 << " |" << endl;
+//           << setw(12) << arraySort[0].getAssigns()            << " |"
+//           << setw(12) << arraySort[0].getCompares()           << endl;
    }
 
    // all done
@@ -189,7 +184,7 @@ void compareSorts()
  *******************************************/
 void testIndividualSorts(int choice)
 {
-   assert(choice >= 1 && choice <= 7);
+   assert(choice >= 1 && choice <= 4);
    
    // prepare the array
    int array[] =
