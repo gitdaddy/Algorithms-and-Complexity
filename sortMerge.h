@@ -88,7 +88,7 @@ void sortMerge(T array[], int num)
          first2 = index - 1;
          if(index == num)
          {
-            copyArray(array1, array2, first1, first1, num);
+            copyArray(array1, array2, first2, first2, num);
             numSort++;
          }
         
