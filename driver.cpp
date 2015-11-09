@@ -10,6 +10,8 @@ using namespace std;
 
 // prototypes for our test functions
 void compareSorts();
+void comparen2Sorts();
+void comparelognSorts();
 void testIndividualSorts(int choice);
 
 /******************************************
@@ -27,39 +29,59 @@ struct SortNameAndFunction
 const SortNameAndFunction sorts[] =
 {
    { NULL,             NULL,          NULL          },
-   { "Bubble Sort",    sortBubble,    sortBubble    },
-   { "Cocktail Sort",  sortCockTail,  sortCockTail  },
+   { NULL,             NULL,          NULL          },
+   { NULL,             NULL,          NULL          },
+  { "Bubble Sort",    sortBubble,    sortBubble    },
+  { "Cocktail Sort",  sortCockTail,  sortCockTail  },
    { "Binary Sort",    sortBinary,    sortBinary    },
    { "Merge Sort",     sortMerge,     sortMerge     }
 
 };
 
+const SortNameAndFunction n2Sorts[] =
+{
+   { NULL,             NULL,          NULL          },
+  { "Bubble Sort",    sortBubble,    sortBubble    },
+  { "Cocktail Sort",  sortCockTail,  sortCockTail  }
+};
+
+const SortNameAndFunction lognSorts[] =
+{
+   { NULL,             NULL,          NULL          },
+   { "Binary Sort",    sortBinary,    sortBinary    },
+   { "Merge Sort",     sortMerge,     sortMerge     }
+};
 /**********************************************************************
  * MAIN
  * This is just a simple menu to launch a collection of tests
  ***********************************************************************/
 int main()
 {
-   compareSorts();
-   // // menu, built from the sortValues list above
-   // cout << "Select the test you want to run:\n";
-   // cout << "\t0. To compare all the sorting algoritms\n";
-   // for (int i = 1; i <= 4; i++)
-      // cout << '\t' << i << ". "
-           // << sorts[i].name << endl;
+   // menu, built from the sortValues list above
+   cout << "Select the test you want to run:\n";
+   cout << "\t0. To compare all the sorting algoritms\n";
+   cout << "\t1. To compare n^2 the sorting algoritms\n";
+   cout << "\t2. To compare nlogn the sorting algoritms\n";
+   for (int i = 3; i <= 6; i++)
+      cout << '\t' << i << ". "
+           << sorts[i].name << endl;
 
-   // // user specifies his choice
-   // int choice;
-   // cout << "> ";
-   // cin  >> choice;
+   // user specifies his choice
+   int choice;
+   cout << "> ";
+   cin  >> choice;
 
-   // // execute the user's choice
-   // if (choice == 0)
-      // compareSorts();
-   // else if (choice >= 1 && choice <= 4)
-      // testIndividualSorts(choice);
-   // else
-      // cout << "Unrecognized command, exiting...\n";
+   // execute the user's choice
+   if (choice == 0)
+      compareSorts();
+   else if (choice == 1)
+	  comparen2Sorts();
+   else if (choice == 2)
+	  comparelognSorts();
+   else if (choice >= 3 && choice <= 6)
+      testIndividualSorts(choice);
+   else
+      cout << "Unrecognized command, exiting...\n";
 
    return 0;
 }
@@ -75,7 +97,7 @@ void createTestArrays(SortValue * & arrayStart,
                       int & num)
 {
    // prompt for size
-   cout << "How many items in the test (10000 - 40000 are good numbers)? ";
+   cout << "How many items in the test? ";
    cin  >> num;
 
    // allocate the array
@@ -87,40 +109,43 @@ void createTestArrays(SortValue * & arrayStart,
       return;
    }
 
-   // fill the array with random values
-   cout << "What type of test would you like to run?\n";
-   cout << "   1. random numbers\n";
-   cout << "   2. already sorted in ascending order\n";
-   cout << "   3. already sorted in decending order\n";
-   cout << "   4. almost sorted in ascending order\n";
-   cout << "   5. random but with a small number of possible values\n";
-   cout << "> ";
-   int option;
-   cin >> option;
+   for (int i = 0; i < num; i++)
+   arrayStart[i].random();
 
-   switch (option)
-   {
-      case 5:  // random but with a small number of possible values
-         for (int i = 0; i < num; i++)
-            arrayStart[i] = rand() % 10;
-         break;
-      case 4: // almost sorted in ascending order
-         for (int i = 0; i < num; i++)
-            arrayStart[i] = i + rand() % 10;
-         break;
-      case 3: // already sorted in decending order
-         for (int i = 0; i < num; i++)
-            arrayStart[i] = num - i;
-         break;
-      case 2: // already sorted in ascending order
-         for (int i = 0; i < num; i++)
-            arrayStart[i] = i;
-         break;
-      case 1: // random numbers
-      default: 
-         for (int i = 0; i < num; i++)
-            arrayStart[i].random();
-   }
+   // // fill the array with random values
+   // cout << "What type of test would you like to run?\n";
+   // cout << "   1. random numbers\n";
+   // cout << "   2. already sorted in ascending order\n";
+   // cout << "   3. already sorted in decending order\n";
+   // cout << "   4. almost sorted in ascending order\n";
+   // cout << "   5. random but with a small number of possible values\n";
+   // cout << "> ";
+   // int option;
+   // cin >> option;
+
+   // switch (option)
+   // {
+      // case 5:  // random but with a small number of possible values
+         // for (int i = 0; i < num; i++)
+            // arrayStart[i] = rand() % 10;
+         // break;
+      // case 4: // almost sorted in ascending order
+         // for (int i = 0; i < num; i++)
+            // arrayStart[i] = i + rand() % 10;
+         // break;
+      // case 3: // already sorted in decending order
+         // for (int i = 0; i < num; i++)
+            // arrayStart[i] = num - i;
+         // break;
+      // case 2: // already sorted in ascending order
+         // for (int i = 0; i < num; i++)
+            // arrayStart[i] = i;
+         // break;
+      // case 1: // random numbers
+      // default: 
+         // for (int i = 0; i < num; i++)
+            // arrayStart[i].random();
+   // }
 }
 
 
@@ -142,13 +167,10 @@ void compareSorts()
    srand(time(NULL));
    cout.setf(ios::fixed);
    cout.precision(2);
-   // cout << "      Sort Name    Time       Assigns      Compares\n";
-   // cout << " ---------------+-------+-------------+-------------\n";
-
    cout << "      Sort Name    Time  \n";
    cout << " ---------------+-------+\n";   
    
-   for (int iSort = 1; iSort <= 4; iSort++)
+   for (int iSort = 3; iSort <= 6; iSort++)
    {
       // get ready by copying the un-sorted numbers to the array
       for (int iValue = 0; iValue < num; iValue++)
@@ -162,9 +184,96 @@ void compareSorts()
 
       // report the results
       cout << setw(15) << sorts[iSort].name                    << " |"
-           << setw(6)  << (float)(msEnd - msBegin) / 1000000.0 << " |" << endl;
-//           << setw(12) << arraySort[0].getAssigns()            << " |"
-//           << setw(12) << arraySort[0].getCompares()           << endl;
+           << setw(6)  << (float)(msEnd - msBegin) / 1000000.0 << " |"
+		   << endl;
+   }
+
+   // all done
+   delete [] arrayStart;
+   delete [] arraySort;
+}
+
+/*******************************************
+ * N^2 SORTS COMPARISION
+ * Compare the relative speed of the various sorts
+ ******************************************/
+void comparen2Sorts()
+{
+   // allocate the array
+   SortValue * arrayStart;
+   SortValue * arraySort;
+   int num;
+   createTestArrays(arrayStart, arraySort, num);
+   if (arrayStart == NULL || arraySort == NULL)
+      return;
+
+   // get ready with the header to the table
+   srand(time(NULL));
+   cout.setf(ios::fixed);
+   cout.precision(2);
+   cout << "      Sort Name    Time  \n";
+   cout << " ---------------+-------+\n";   
+   
+   for (int iSort = 1; iSort <= 2; iSort++)
+   {
+      // get ready by copying the un-sorted numbers to the array
+      for (int iValue = 0; iValue < num; iValue++)
+         arraySort[iValue] = arrayStart[iValue];
+      arraySort[0].reset();
+
+      // perform the sort
+      int msBegin = clock();
+      n2Sorts[iSort].sortValue(arraySort, num);
+      int msEnd = clock();
+
+      // report the results
+      cout << setw(15) << n2Sorts[iSort].name                    << " |"
+           << setw(6)  << (float)(msEnd - msBegin) / 1000000.0 << " |"
+		   << endl;
+   }
+
+   // all done
+   delete [] arrayStart;
+   delete [] arraySort;
+}
+
+/*******************************************
+ * NLOGN SORTS COMPARISION
+ * Compare the relative speed of the various sorts
+ ******************************************/
+void comparelognSorts()
+{
+   // allocate the array
+   SortValue * arrayStart;
+   SortValue * arraySort;
+   int num;
+   createTestArrays(arrayStart, arraySort, num);
+   if (arrayStart == NULL || arraySort == NULL)
+      return;
+
+   // get ready with the header to the table
+   srand(time(NULL));
+   cout.setf(ios::fixed);
+   cout.precision(2);
+   cout << "      Sort Name    Time  \n";
+   cout << " ---------------+-------+\n";   
+   
+   for (int iSort = 1; iSort <= 2; iSort++)
+   {
+      // get ready by copying the un-sorted numbers to the array
+      for (int iValue = 0; iValue < num; iValue++)
+         arraySort[iValue] = arrayStart[iValue];
+      arraySort[0].reset();
+
+      // perform the sort
+      int msBegin = clock();
+      lognSorts[iSort].sortValue(arraySort, num);
+      int msEnd = clock();
+
+      // report the results
+      cout << setw(15) << lognSorts[iSort].name                    << " |"
+           << setw(6)  << (float)(msEnd - msBegin) / 1000000.0 << " |"
+		   << endl;
    }
 
    // all done
@@ -184,7 +293,7 @@ void compareSorts()
  *******************************************/
 void testIndividualSorts(int choice)
 {
-   assert(choice >= 1 && choice <= 4);
+   assert(choice >= 3 && choice <= 6);
    
    // prepare the array
    int array[] =
