@@ -8,10 +8,10 @@ namespace Inquisitiveness
 {
     static class MergeSort
     {
-        static public void DoMerge(int[] numbers, int left, int mid, int right)
+        static public void DoMerge(double[] numbers, int left, int mid, int right)
         {
 
-            int[] temp = new int[25];
+            double[] temp = new double[numbers.Length];
 
             int i, left_end, num_elements, tmp_pos;
 
@@ -63,18 +63,23 @@ namespace Inquisitiveness
 
         }
 
+        static private bool slowCompare(int a, int b)
+        {
+            // change the loop limit up or down...
+            //   for (int i = 0; i < LOOP_LIMIT; i++);
+            return (a > b);
+        }
 
-
-        static public void MergeSort_Recursive(int[] numbers, int left, int right)
+        static public void MergeSort_Recursive(double[] numbers, int left, int right)
         {
 
             int mid;
 
 
 
-            if (right > left)
+            if (right >  left)
             {
-
+                
                 mid = (right + left) / 2;
 
                 MergeSort_Recursive(numbers, left, mid);
