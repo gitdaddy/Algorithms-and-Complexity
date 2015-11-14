@@ -5,7 +5,7 @@
 #include "sortValue.h"     // for SortValue to instrument the sort algorithms
 #include "sortBubble.h"    // for sortBubble()
 #include "sortBinary.h"    // for sortBinary()
-#include "sortMerge.h"     // for sortMerge()
+#include "sortQuick.h"     // for sortQuick()
 using namespace std;
 
 // prototypes for our test functions
@@ -31,10 +31,10 @@ const SortNameAndFunction sorts[] =
    { NULL,             NULL,          NULL          },
    { NULL,             NULL,          NULL          },
    { NULL,             NULL,          NULL          },
-  { "Bubble Sort",    sortBubble,    sortBubble    },
-  { "Cocktail Sort",  sortCockTail,  sortCockTail  },
+   { "Bubble Sort",    sortBubble,    sortBubble    },
+   { "Cocktail Sort",  sortCockTail,  sortCockTail  },
    { "Binary Sort",    sortBinary,    sortBinary    },
-   { "Merge Sort",     sortMerge,     sortMerge     }
+   { "Quick Sort",     sortQuick,     sortQuick     }
 
 };
 
@@ -49,7 +49,8 @@ const SortNameAndFunction lognSorts[] =
 {
    { NULL,             NULL,          NULL          },
    { "Binary Sort",    sortBinary,    sortBinary    },
-   { "Merge Sort",     sortMerge,     sortMerge     }
+   { "sortQuick",     sortQuick,     sortQuick     }
+
 };
 /**********************************************************************
  * MAIN
@@ -298,7 +299,7 @@ void testIndividualSorts(int choice)
    // prepare the array
    int array[] =
    {
-      889, 192, 528, 675, 154, 746, 562, 482, 448, 842, 929, 330, 615, 225,
+      192, 528, 675, 154, 746, 562, 482, 448, 820, 929, 330, 615, 225, 889,
       785, 577, 606, 426, 311, 867, 773, 775, 190, 414, 155, 771, 499, 337,
       298, 242, 656, 188, 334, 184, 815, 388, 831, 429, 823, 331, 323, 752,
       613, 838, 877, 398, 415, 535, 776, 679, 455, 602, 454, 545, 916, 561,
@@ -307,7 +308,7 @@ void testIndividualSorts(int choice)
       177, 224, 131, 446, 591, 882, 913, 201, 441, 673, 997, 137, 195, 281,
       563, 151,
    };
-   int size = sizeof(array) / sizeof(array[0]);
+   int size = sizeof(array) / sizeof(*array);
 
    // display the list before they are sorted
    cout << sorts[choice].name << endl;
