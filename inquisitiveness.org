@@ -1,0 +1,234 @@
+#+TITLE: Inquisitiveness
+#+AUTHOR: Rick Neff
+#+EMAIL:  NeffR@byui.edu
+#+LANGUAGE:  en
+#+OPTIONS:   H:4 num:nil toc:nil \n:nil @:t ::t |:t ^:t *:t TeX:t LaTeX:t
+
+* EN10
+
+  You are invited to inquisitively evaluate algorithm efficiency using
+  Big-Oh *and* empirical measurements. This invitation to exploration
+  is codenamed /Inquisitiveness/.
+
+** Background
+
+   - /Empirical/ means based on experimental data, not on a theory.
+   - It means originating in or based upon observation or experience;
+     capable of being verified or disproved by observation or
+     experiment;
+   - It is derived from observation, experience or experiment rather
+     than from conjecture, hypothesis or theory.
+
+   So, empirical information is based on perception with the five
+   senses rather than thinking and rationalism. In other words, it is
+   based on /practical/ experience. It is often called /benchmarking/.
+
+*** General Plan for Empirical Experimentation
+
+    1. Understand the experiment's purpose.
+    2. Decide on the efficiency metric *M* to be measured and the
+       measurement unit (an operation's count or a time unit).
+    3. Decide on characteristics of the input sample (its range,
+       size, and so on).
+    4. Prepare a program implementing the algorithm (or
+       algorithms) for the experimentation.
+    5. Generate a sample of inputs.
+    6. Run the algorithm (or algorithms) on the sample's inputs
+       and record the data observed.
+    7. Analyze the data obtained.
+
+*** Important Points
+
+    Three points to bear in mind when analyzing algorithm efficiency
+    empirically in the context of this exploration:
+
+    1. You are *not* given specific algorithms to measure and compare,
+       just specific algorithm *types*.
+    2. You thus have great latitude in how to conduct and report on
+       your experiments, so use your cohort collaboration to the max.
+    3. You may study/use any code found in http://firstthreeodds.org/cs306/empirical.zip
+
+** Requirements
+
+   Implement two "n-squared" sorting algorithms and two "n log n"
+   algorithms of your choice using any language you choose (mixing languages
+   if you choose, but see the questions below). Analyze the four algorithms
+   and show how you found the running times for each. Do an empirical
+   measurement of the running times on each of the four algorithms and
+   compare the results with the theoretical running time. When doing the
+   empirical measurements, you will probably need to loop over most
+   problem sizes several times so they produce measurable run times.
+   Make available all code and scripts you use to obtain the running times.
+
+   For maximum benefit, treat this as an open-ended project, and
+   explore some additional factors affecting runtime. For example,
+   answer these questions, and then some:
+
+   1. How does the language (Java, C++, etc.),
+      including compiler switches, affect performance?
+   2. How does the data type (*int*, *float*, etc.) to be sorted
+      affect performance?
+   3. When does overhead from recursion affect performance?
+   4. How does the operating system affect the performance of the algorithms? 
+   5. How do the theoretical running time and the empirical running time
+      compare? If they are different, why are they different?
+   6. How does optimization of a compiler affect performance?
+   7. What are the pros and cons of each algorithm based on
+      the theoretical and the empirical analysis?
+   8. Are there situations where a slow algorithm is acceptable to use
+      in an application?
+   9. Are there situations where a fast algorithms might be the only option?
+
+** Expectations
+
+   - Do work that you can take pride in reporting on.
+   - Make your report look and feel professional --- which for starters
+     means to eradicate all mechanical infelicities.
+   - Include an introduction (clearly stating the goal(s) of this
+     activity) and a conclusion (summarizing the analysis).
+   - Mention the hardware, compiler, timers used, and any and all
+     assumptions made.
+   - *Be specific* about what the best case,
+     average case, and worst case are for each algorithm.
+   - Include a comparison of timings for each sort. It's acceptable
+     and desirable to plot your timings for multiple sorts on the same
+     graph, but also include a table of your timings.
+   - Include a comparison of the two "n-squared" algorithms and a
+     comparison of the two "n log n" algorithms, but *NOT* a
+     comparison of an "n-squared" with an "n log n" algorithm, which
+     doesn't make sense.
+
+* Inquisitiveness
+** Sorts
+   Bubble
+   Cocktail
+   Binary Search Tree
+   Merge
+   Quick
+** Benchmarking
+   ========================================================================================= 
+   C#       Test         Data Type   List Nature    Bubble     CockTail     Quick     Merge   
+   -------- --------------------------------------------------------------------------------
+            50,000       int         Randomized      9.25s        7.97s     0.003     0.28s  
+            100,000      int         Randomized                             0.009     8.52s  
+	    50,000       double      Randomized     11.29s        8.88s     0.004     4.45s  
+	    100,000      double      Randomized                             0.001    16.63s  
+   =========================================================================================
+   C++      Test         Data Type   List Nature    Bubble     CockTail     Quick     BST 
+   -------- -------------------------------------------------------------------------------- 
+            50,000       int         Randomized     17.11s       18.94s     0.01s     0.02s                  
+	    100,000      int         Randomized     68.56s       75.70s     0.02s     0.05s             
+	    1,000,000    int         Randomized                             0.32s     0.54s    
+	    10,000,000   int         Randomized                             3.86s     5.53s     
+	    100,000,000  int         Randomized                            47.89s    56.86s 
+            --------------------------------------------------------------------------------
+            50,000       float       Randomized     17.92s       19.32s     0.01s     0.02s 
+            100,000      float       Randomized     69.33s       76.93s     0.03s     0.06s 
+            1,000,000    float       Randomized                             0.33s     0.55s 
+            10,000,000   float       Randomized                             3.91s     5.58s 
+            100,000,000  float       Randomized                            48.23s    57.15s 
+            --------------------------------------------------------------------------------
+            50,000       double      Randomized     18.54s       20.69s     0.01s     0.02s 
+            100,000      double      Randomized     69.59s       77.11s     0.02s     0.06s 
+            1,000,000    double      Randomized                             0.32s     0.55s 
+            10,000,000   double      Randomized                             3.91s     6.00s 
+            100,000,000  double      Randomized                            49.11s    58.10s 
+  ==========================================================================================
+   1. How does the language (Java, C++, etc.), including compiler switches, affect performance?
+      => From the experiments,
+              n^2 sorts in C# run faster than the ones in C++ 
+              nlogn sorts in C++ run faster than the ones in C#
+
+   2. How does the data type (*int*, *float*, etc.) to be sorted affect performance?
+      => From the experiments, 
+              the speed order of sorting three different sets (int, float, double):
+                  int (fastest) => float (normal) => double (slowest)
+
+   3. When does overhead from recursion affect performance?
+      => Recursion used in C# (Quick, Merge) slower than Iteration used in C++ (Quick, BST)
+
+   4. How does the operating system affect the performance of the algorithms?
+      => OS does not affect the performance (I ran the experiments when:
+             CPU usage is about 4~6%
+             RAM is about 40%
+
+   5. How do the theoretical running time and the empirical running time compare?
+      =>
+      If they are different, why are they different?
+      =>
+
+   6. How does optimization of a compiler affect performance?
+      => 
+
+   7. What are the pros and cons of each algorithm based on the theoretical and the empirical analysis?
+      =>
+
+   8. Are there situations where a slow algorithm is acceptable to use in an application?
+      => Yes, there are. An example is when fast algorithms use a lot of working memory.
+         Slower algorithms would be more efficient because they use less memory. 
+
+   9. Are there situations where a fast algorithms might be the only option?
+      => Yes, there are. Slow algorithm cannot handle probelms 
+         when dealing a large amount of randomized numbers (data).
+         Fast algorithms will solve the problems in few seconds to few minutes,
+         while slow algorithms will take few days to solve.
+
+** What is True?
+
+#+BEGIN_SRC emacs-lisp
+(defun what-is-true-about-my-engagement-with-inquisitiveness ()
+  "If need be, replace a 100 with a smaller number to reflect how much you feel you deserve."
+  (vector
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of my experience in general?                              ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+["I collaborated with the classmates in my cohort." 100]
+["I learned something new." 100]
+["I achieved something meaningful, or something I can build upon at a later time." 100]
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of my report on what I learned?                            ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+["I learned more about emacs 'org' mode in my use of it to write my report." 100]
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true about my meeting explicit requirements?                    ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+["I explored factors affecting runtime, and answered at least 5 of the 9 questions." 100]
+["I explored factors affecting runtime, and answered at least 6 of the 9 questions." 100]
+["I explored factors affecting runtime, and answered at least 7 of the 9 questions." 100]
+["I explored factors affecting runtime, and answered at least 8 of the 9 questions." 100]
+["I explored factors affecting runtime, and answered all of the 9 questions, and a few more of my own." 100]
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is true of the mechanical "infelicities" (misspelled words,        ;;
+;; grammatical errors, punctuation errors) in my report on what I learned? ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+["There are fewer than four." 100]
+["There are fewer than three." 100]
+["There are fewer than two." 100]
+["There are none." 100]
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is otherwise true of the quality of the information in my report?  ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+["Each detail contributes to the report's purpose, with no distracting, extraneous information." 100]
+["There are no unstated assumptions, and the arguments are logical and concise." 100]
+["As confirmed by having someone not in my cohort read it, the reader can readily see what is going on in my head." 100]
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; What is otherwise true of the organization of my report?                ;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+["My report's information is presented in a logical sequence, easily followed." 100]
+["My report has a strong introduction, clearly stating the goal of this exploration." 100]
+["My report has a strong conclusion, summarizing my analysis." 100]
+["My report has pithy headings to guide the information flow." 100]
+["The information flow in my report has engaging transitions that entice the reader to read further." 100]
+))
+#+END_SRC
